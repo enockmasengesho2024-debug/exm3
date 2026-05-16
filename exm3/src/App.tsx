@@ -1,76 +1,97 @@
+import { useState } from "react";
+
 function App() {
+  const siteName = "Learning Material";
+
+  const materials = [
+    {
+      title: "Study Support",
+      description:
+        "Simple learning tools that help students understand lessons clearly and improve step by step.",
+    },
+    {
+      title: "Review Activities",
+      description:
+        "Helpful review questions allow students to practice, prepare for quizzes, and build confidence in class.",
+    },
+    {
+      title: "Digital Learning Resources",
+      description:
+        "Online links and materials give students extra support for studying at home or at school.",
+    },
+    {
+      title: "About Learning Material",
+      description:
+        "Learning Material is an educational website designed to support students with useful study tools. It provides lesson guides, review activities, and digital resources to help learners improve their understanding and succeed in school.",
+    },
+  ];
+
+  const [formMessage, setFormMessage] = useState("");
+
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setFormMessage(
+      "Thank you for contacting Learning Material. We will respond soon!"
+    );
+  }
+
   return (
     <div className="app">
       <nav className="navbar">
-        <h1>Learning Material</h1>
+        <h2>{siteName}</h2>
 
-        <div className="nav-links">
-          <a href="#home">Home</a>
-          <a href="#materials">Materials</a>
-          <a href="#about">About</a>
-          <a href="#contact">Contact</a>
-        </div>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#materials">Materials</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
       </nav>
 
       <section id="home" className="hero">
-        <div className="hero-text">
-          <p className="tag">React Home Page</p>
-          <h2>Simple learning tools for student success.</h2>
+        <div className="hero-content">
+          <h1>Welcome to {siteName}</h1>
           <p>
-            Learning Material is a branded React home page designed to support
-            students with study tools, review activities, and digital learning
-            resources.
+            An educational website designed to support students with useful
+            study tools.
           </p>
           <a href="#materials" className="btn">View Materials</a>
         </div>
       </section>
 
-      <section id="materials" className="section">
+      <section id="materials" className="materials-section">
         <h2>Learning Materials</h2>
 
-        <div className="cards">
-          <div className="card">
-            <h3>Study Support</h3>
-            <p>
-              Simple learning tools help students understand lessons clearly
-              and improve step by step.
-            </p>
-          </div>
-
-          <div className="card">
-            <h3>Review Activities</h3>
-            <p>
-              Helpful review questions allow students to practice, prepare for
-              quizzes, and build confidence in class.
-            </p>
-          </div>
-
-          <div className="card">
-            <h3>Digital Resources</h3>
-            <p>
-              Online links and materials give students extra support for
-              studying at home or at school.
-            </p>
-          </div>
+        <div className="card-container">
+          {materials.map((material) => (
+            <div className="card" key={material.title}>
+              <h3>{material.title}</h3>
+              <p>{material.description}</p>
+            </div>
+          ))}
         </div>
       </section>
 
-      <section id="about" className="section about">
-        <h2>About Learning Material</h2>
-        <p>
-          Learning Material is an educational website created with React. It
-          provides useful study content, review support, and digital resources
-          to help learners improve their understanding and succeed in school.
-        </p>
+      <section id="contact" className="contact-section">
+        <h2>Contact Us</h2>
+
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="name">Full Name</label>
+          <input id="name" type="text" placeholder="Enter your name" required />
+
+          <label htmlFor="email">Email Address</label>
+          <input id="email" type="email" placeholder="Enter your email" required />
+
+          <label htmlFor="message">Message</label>
+          <textarea id="message" placeholder="Write your message" required />
+
+          {formMessage && <p className="success-message">{formMessage}</p>}
+
+          <button type="submit">Send</button>
+        </form>
       </section>
 
-      <section id="contact" className="section contact">
-        <h2>Contact</h2>
-        <p>Email: student@example.com</p>
-      </section>
-
-      <footer className="footer">
-        <p>© 2026 Learning Material. Built with React.</p>
+      <footer>
+        <p>© 2026 {siteName}. All Rights Reserved.</p>
       </footer>
     </div>
   );
